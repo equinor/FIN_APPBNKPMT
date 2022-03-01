@@ -1,0 +1,41 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+	xmlns:nav="sap.ui.comp.navpopover">
+
+	<HBox
+		visible="{= !${PaymentBatchOrigin} }">
+		<!--SAPUI5 issue Wrongly aligned label -> Hack provided in BCP 1870295349 -->
+		<Label
+			id="payingCompanyCodeLabel"
+			labelFor="payingCompanyCode"
+			text="{= ${/#C_AbpPaymentBatchType/CompanyCode/@sap:label} + ':'}"/>
+
+		<core:HTML content="&lt;span&gt;&amp;nbsp;&lt;/span&gt;"/>
+		<nav:SmartLink
+			id="payingCompanyCode"
+			text="{parts: [ {path: 'CompanyCode'}, {path: 'CompanyCodeName'} ], formatter: '.formatter.composeCodeName' }"
+			semanticObject="CompanyCode"/>
+	</HBox>
+
+	<ObjectStatus
+		id="payingCompanyCodeText"
+		text="{parts: [ {path: 'CompanyCode'}, {path: 'CompanyCodeName'} ], formatter: '.formatter.composeCodeName' }"
+		title="{/#C_AbpPaymentBatchType/CompanyCode/@sap:label}"
+		visible="{= !!${PaymentBatchOrigin} }" />
+	<ObjectStatus
+		id="numberOfPayments"
+		text="{NumberOfPayments}"
+		title="{/#C_AbpPaymentBatchType/NumberOfPayments/@sap:label}" />
+
+	<ObjectStatus
+		id="paymentRule"
+		text="{PaymentBatchRuleDescription}"
+		title="{@i18n>detailInfoPaymentBatchRuleDescription}" />
+
+</core:FragmentDefinition>

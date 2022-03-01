@@ -1,0 +1,32 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+		xmlns="sap.m"
+		xmlns:core="sap.ui.core"
+		xmlns:navpopover="sap.ui.comp.navpopover">
+	<ResponsivePopover
+			class="sapUiPopupWithPadding"
+			id="morePaymentamountsPopover"
+			placement="Bottom"
+			title="{/#C_AbpPaymentBatchType/PaidAmountInPaytCurrency/@sap:label}">
+		<content>
+			<List
+				id="paymentAmountList"
+				items="{to_GroupedPayment}">
+				<CustomListItem>
+					<HBox
+                        justifyContent="End">
+                        <Text
+                            class="sapUiTinyMarginEnd"
+                            text="{ path: 'PaidAmountInPaytCurrency', formatter: '.formatter.longFloatValue' }" />
+                        <Text 
+                            text="{PaymentCurrency}" />
+                    </HBox>
+				</CustomListItem>
+			</List>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

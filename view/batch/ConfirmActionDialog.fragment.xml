@@ -1,0 +1,134 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+        xmlns="sap.m"
+        xmlns:core="sap.ui.core">
+    <Dialog
+            id="dialog"
+            title="{action>/title}"
+            class="sapUiContentPadding"
+            initialFocus="confirmDialogOkButton"
+            afterClose="onAfterClose"
+            ariaDescribedBy="errorStrip confirmQuestion approveCount approveStatus deferCount deferStatus returnCount returnStatus rejectCount rejectStatus">
+        <content>
+        	<MessageStrip
+        			class="sapUiSmallMarginBottom"
+                    id="errorStrip"
+                    text="{@i18n>userConfirmBatchActionMismatchError}"
+                    type="Error"
+                    visible="{= ${stats>/mismatchError} === true}"/>
+
+            <Text
+                id="confirmQuestion"
+                text="{@i18n>userConfirmQuestion}"/>
+
+            <VBox
+                id="statusSection"
+                class="sapUiSmallMarginTopBottom">
+
+                <BusyIndicator
+                    id="busyIndicator"
+                    visible="{= ${stats>/reading} === true}"/>
+
+                <HBox
+                    id="approveSection"
+                    justifyContent="SpaceBetween"
+                    visible="{= !!${stats>/app} }">
+                    <Text
+                        id="approveCount"
+                        text="{parts: [ {path: 'stats>/app'}, {path: 'stats>/isMaster'} ], formatter: '.formatter.numberOfPayments'}"/>
+                    <ObjectStatus
+                        id="approveStatus"
+                        text="{@i18n>masterSelectedBatchesApprove}"
+                        state="Success"/>
+                </HBox>
+
+                <HBox
+                    id="deferSection"
+                    justifyContent="SpaceBetween"
+                    visible="{= !!${stats>/def} }">
+                    <Text
+                        id="deferCount"
+                        text="{parts: [ {path: 'stats>/def'}, {path: 'stats>/isMaster'} ], formatter: '.formatter.numberOfPayments'}"/>
+                    <ObjectStatus
+                        id="deferStatus"
+                        text="{@i18n>masterSelectedBatchesDefer}"
+                        state="Warning"/>
+                </HBox>
+
+                <HBox
+                    id="returnSection"
+                    justifyContent="SpaceBetween"
+                    visible="{= !!${stats>/ret} }">
+                    <Text
+                        id="returnCount"
+                        text="{parts: [ {path: 'stats>/ret'}, {path: 'stats>/isMaster'} ], formatter: '.formatter.numberOfPayments'}"/>
+                    <ObjectStatus
+                        id="returnStatus"
+                        text="{@i18n>masterSelectedBatchesReturn}"
+                        state="Warning"/>
+                </HBox>
+
+                <HBox
+                    id="rejectSection"
+                    justifyContent="SpaceBetween"
+                    visible="{= !!${stats>/rej} }">
+                    <Text
+                        id="rejectCount"
+                        text="{parts: [ {path: 'stats>/rej'}, {path: 'stats>/isMaster'} ], formatter: '.formatter.numberOfPayments'}"/>
+                    <ObjectStatus
+                        id="rejectStatus"
+                        text="{@i18n>masterSelectedBatchesReject}"
+                        state="Error"/>
+                </HBox>
+            </VBox>
+
+            <VBox>
+                <Label
+                    design="Bold"
+                    id="deferDateLabel"
+                    labelFor="deferDate"
+                    text="{@i18n>deferDateLabel}"
+                    visible="{action>/isDefer}"/>
+
+                <DatePicker
+                        id="deferDate"
+                        dateValue="{action>/deferDate}"
+                        displayFormat="medium"
+                        minDate="{action>/deferMinDate}"
+                        visible="{action>/isDefer}"/>
+            </VBox>
+
+            <Label
+                    labelFor="userNote"
+                    design="Bold"
+                    id="userNoteLabel"
+                    text="{@i18n>userNote}"/>
+            <TextArea
+                    ariaLabelledBy="userNoteLabel"
+                    id="userNote"
+                    width="100%"
+                    rows="4"
+                    maxLength="250"
+                    value="{action>/note}"
+                    placeholder="{= ${action>/isReject} ? ${@i18n>userNoteRejectPlaceholder} : ${@i18n>userNotePlaceholder} }"
+                    liveChange="handleLiveChange"/>
+        </content>
+        <beginButton>
+            <Button
+                    enabled="{action>/actionEnabled}"
+                    id="confirmDialogOkButton"
+                    text="{@i18n>dialogOkButtonText}"
+                    press="onConfirmDialogOkPress"/>
+        </beginButton>
+        <endButton>
+            <Button
+                    id="confirmDialogCancelButton"
+                    text="{@i18n>dialogCancelButtonText}"
+                    press="onConfirmDialogCancelPress"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,105 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog
+        id="confirmBatchListAction"
+        title="{action>/title}"
+        class="sapUiContentPadding"
+        initialFocus="confirmDialogOkButton"
+        afterClose="onAfterConfirmMasterClose"
+        ariaDescribedBy="lockedMessage unsavedMessage confirmQuestion takeoverCheckbox batchCount batchAction">
+        <content>
+            <VBox>
+                <HBox
+                    class="sapUiSmallMarginBottom"
+                    visible="{action>/hasLocked}">
+                    <Text
+                        id="lockedMessage"
+                        text="{action>/lockMessage}"/>
+                </HBox>
+
+                <HBox
+                    class="sapUiSmallMarginBottom"
+                    visible="{action>/hasUnsaved}">
+                    <Text
+                        id="unsavedMessage"
+                        text="{action>/unsavedMessage}"/>
+                </HBox>
+
+                <HBox>
+                    <Text
+                        id="confirmQuestion"
+                        text="{@i18n>userConfirmQuestion}"/>
+                </HBox>
+
+                <CheckBox
+                    id="takeoverCheckbox"
+                    selected="{action>/takeOver}"
+                    text="{@i18n>confirmDialogTakoverOption}"
+                    visible="{action>/hasUnsaved}"/>
+
+                <HBox
+                    class="sapUiSmallMarginTopBottom"
+                    justifyContent="SpaceBetween">
+                    <Text
+                        id="batchCount"
+                        text="{path: 'action>/readyCount', formatter: '.numberOfBatches'}"/>
+                    <ObjectStatus
+                        id="batchAction"
+                        text="{action>/actionTitle}"
+                        state="{action>/actionStatus}"/>
+                </HBox>
+            </VBox>
+
+            <VBox>
+                <Label
+                    design="Bold"
+                    id="deferDateLabel"
+                    labelFor="deferDate"
+                    text="{@i18n>deferDateLabel}"
+                    visible="{action>/isDefer}"/>
+
+                <DatePicker
+                    id="deferDate"
+                    dateValue="{action>/deferDate}"
+                    displayFormat="medium"
+                    minDate="{action>/deferMinDate}"
+                    visible="{action>/isDefer}"/>
+            </VBox>
+
+            <VBox>
+                <Label
+                    id="userNoteLabel"
+                    labelFor="userNote"
+                    design="Bold"
+                    text="{@i18n>userNote}"/>
+                <TextArea
+                    id="userNote"
+                    maxLength="250"
+                    placeholder="{= ${action>/isReject} ? ${@i18n>userNoteRejectPlaceholder} : ${@i18n>userNotePlaceholder} }"
+                    rows="4"
+                    value="{action>/note}"
+                    valueLiveUpdate="true"
+                    width="100%"/>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button
+                enabled="{action>/enabled}"
+                id="confirmDialogOkButton"
+                text="{@i18n>dialogOkButtonText}"
+                press="onConfirmMasterDialogOkPress"/>
+        </beginButton>
+        <endButton>
+            <Button
+                id="confirmDialogCancelButton"
+                text="{@i18n>dialogCancelButtonText}"
+                press="onConfirmMasterDialogCancelPress"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

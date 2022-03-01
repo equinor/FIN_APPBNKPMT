@@ -1,0 +1,42 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+	xmlns:core="sap.ui.core"
+	xmlns:navpopover="sap.ui.comp.navpopover"
+    xmlns="sap.m">
+
+	<HBox>
+		<navpopover:SmartLink
+			additionalSemanticObjects="Supplier"
+			beforePopoverOpens="onBeforeDocumentPopoverOpens"
+			ignoreLinkRendering="{paymentView>/ignoreDocumentLink}"
+			text="{AccountingDocument}"
+			semanticObject="AccountingDocument"
+			visible="{= !${paymentView>/isInternal} }"/>
+		<Text
+			text="{AccountingDocument}"
+			visible="{= ${paymentView>/isInternal} }"/>
+	</HBox>
+	<HBox>
+		<navpopover:SmartLink
+			text="{parts: [ {path: 'CompanyCode'}, {path: 'PayeeCompanyCodeName'} ], formatter: '.formatter.composeCodeName' }"
+			semanticObject="CompanyCode"
+			visible="{= !${paymentView>/isInternal} }"/>
+		<Text
+			text="{parts: [ {path: 'CompanyCode'}, {path: 'PayeeCompanyCodeName'} ], formatter: '.formatter.composeCodeName' }"
+			visible="{= ${paymentView>/isInternal} }"/>
+	</HBox>
+	<HBox>
+		<navpopover:SmartLink
+			text="{parts: [ {path: 'PayingCompanyCode'}, {path: 'PayingCompanyCodeName'} ], formatter: '.formatter.composeCodeName' }"
+			semanticObject="CompanyCode"
+			visible="{= !${paymentView>/isInternal} }"/>
+		<Text
+			text="{parts: [ {path: 'PayingCompanyCode'}, {path: 'PayingCompanyCodeName'} ], formatter: '.formatter.composeCodeName' }"
+			visible="{= ${paymentView>/isInternal} }"/>
+	</HBox>
+
+</core:FragmentDefinition>

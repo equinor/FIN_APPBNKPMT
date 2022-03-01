@@ -1,0 +1,97 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+		xmlns:core="sap.ui.core"
+		xmlns="sap.m"
+		xmlns:nav="sap.ui.comp.navpopover"
+		xmlns:sap.ui.dt="sap.ui.dt">
+
+	<HBox>
+		<nav:SmartLink
+			ariaLabelledBy="companyCodeColumnHeaderText"
+			text="{parts: [ {path: 'CompanyCode'}, {path: 'CompanyCodeName'} ], formatter: '.formatter.composeCodeName' }"
+			semanticObject="CompanyCode"
+			visible="{= !${PaymentBatchOrigin} }"/>
+		<Text
+			text="{parts: [ {path: 'CompanyCode'}, {path: 'CompanyCodeName'} ], formatter: '.formatter.composeCodeName' }"
+			visible="{= !!${PaymentBatchOrigin} }" />
+	</HBox>
+	<ObjectStatus
+		state="{ path: 'Status', formatter: '.formatter.statusCodeToStatus' }"
+		text="{StatusName}"/>
+
+	<ObjectStatus
+		state="{ path: 'IsUrgentPayment', formatter: '.formatter.formatUrgentFlagStatus' }"
+		text="{PaymentIsUrgentText}"/>
+
+	<ObjectStatus
+		state="{ path: 'ApprovalIsFinal', formatter: '.formatter.isFinalToStatus' }"
+		text="{ApprovalIsFinalText}"/>
+
+	<HBox>
+		<Link
+			ariaLabelledBy="houseBankColumnHeaderText"
+			press="onMoreHouseBanksPress"
+			text="{@i18n>moreValuesLink}"
+			visible="{= ${PaytBatchHasMoreHouseBanks} === true }"/>
+
+		<nav:SmartLink
+			ariaLabelledBy="houseBankColumnHeaderText"
+			beforePopoverOpens="onBeforeHouseBankPopoverOpens"
+			navigationTargetsObtained="onHouseBankNavigationTargetsObtained"
+			text="{HouseBank}"
+			semanticObject="HouseBank"
+			visible="{= ${PaytBatchHasMoreHouseBanks} === false &amp;&amp; !${PaymentBatchOrigin} }"/>
+		<Text
+			text="{HouseBank}"
+			visible="{= ${PaytBatchHasMoreHouseBanks} === false &amp;&amp; !!${PaymentBatchOrigin} }" />
+	</HBox>
+
+	<HBox>
+		<Link
+			ariaLabelledBy="houseBankAccountColumnHeaderText"
+			press="onMoreAccountsPress"
+			text="{@i18n>moreValuesLink}"
+			visible="{= ${PaytBatchHasMoreBankAccounts} === true }"/>
+
+		<nav:SmartLink
+			ariaLabelledBy="houseBankAccountColumnHeaderText"
+			beforePopoverOpens="onBeforeAccountPopoverOpens"
+			navigationTargetsObtained="onAccountNavigationTargetsObtained"
+			text="{HouseBankAccount}"
+			semanticObject="HouseBankAccount"
+			visible="{= ${PaytBatchHasMoreBankAccounts} === false &amp;&amp; !${PaymentBatchOrigin} }"/>
+		<Text
+			text="{HouseBankAccount}"
+			visible="{= ${PaytBatchHasMoreHouseBanks} === false &amp;&amp; !!${PaymentBatchOrigin} }"/>
+
+	</HBox>
+
+	<HBox
+		justifyContent="End">
+		<Link
+			ariaLabelledBy="paidAmountInPaytCurrencyColumnHeaderText"
+			press="onMoreApymentAmountsPress" 
+			text="{@i18n>moreValuesLink}"
+			visible="{= ${PaymentCurrency} === '*' }"/>
+
+		<Text
+			ariaLabelledBy="paidAmountInPaytCurrencyColumnHeaderText"
+			class="sapUiTinyMarginEnd"
+			text="{ path: 'PaidAmountInPaytCurrency', formatter: '.formatter.longFloatValue' }"
+			visible="{= ${PaymentCurrency} !== '*' }"/>
+		
+		<Text 
+			text="{PaymentCurrency}"
+			visible="{= ${PaymentCurrency} !== '*' }"/>
+	</HBox>
+	
+	<Link
+		press="onCreatedByPress"
+		sap.ui.dt:designtime="not-adaptable"
+		text="{FullName}" />
+
+</core:FragmentDefinition>

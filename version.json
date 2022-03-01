@@ -1,0 +1,8 @@
+{ "application": "fin.ap.approvebankpayments",
+  "version": "8.0.1",
+  "buildNumber": "95",
+  "buildId": "95",
+  "branch": "detached",
+  "revision": "e6da6961641bd62ba96145dbb5b2c7a69ee9fc1b",
+  "GitURL": ""
+}

@@ -1,0 +1,37 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<QuickView
+		placement="Auto">
+		<QuickViewPage
+			title="{FullName}"
+			description="{FunctionalTitleName}">
+			<QuickViewGroup>
+				<QuickViewGroupElement
+					label="{@i18n>approversPopoverDepartment}"
+					value="{Department}"
+					visible="{= !!${Department}}"/>
+				<QuickViewGroupElement
+					label="{@i18n>approversPopoverMobile}"
+					value="{MobilePhoneNumber}"
+					type="mobile"
+					visible="{= !!${MobilePhoneNumber}}"/>
+				<QuickViewGroupElement
+					label="{@i18n>approversPopoverTelephone}"
+					value="{PhoneNumber}"
+					type="phone"
+					visible="{= !!${PhoneNumber}}"/>
+				<QuickViewGroupElement
+					label="{@i18n>approversPopoverEmail}"
+					value="{EmailAddress}"
+					type="email"
+					visible="{= !!${EmailAddress}}"/>
+			</QuickViewGroup>
+		</QuickViewPage>
+	</QuickView>
+</core:FragmentDefinition>
